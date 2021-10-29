@@ -1,0 +1,6 @@
+name: Mr. Milu Entity Builder
+type: module
+description: Helper to simplify fields creation in custom entity
+package: Mr. Milú
+core: 8.x
+version: 1.0.0

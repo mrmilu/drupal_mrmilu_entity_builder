@@ -1,0 +1,5 @@
+{
+    "name": "mrmilu/mrmilu_entity_builder",
+    "description": "Helper to simplify fields creation in custom entity",
+    "type": "drupal-mrmilu-module"
+}
