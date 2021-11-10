@@ -181,6 +181,30 @@ class EntityBuilderHelper {
 
   }
 
+  public static function createFieldParagraph($label, $bundles, $required) {
+    return BaseFieldDefinition::create('entity_reference_revisions')
+      ->setLabel($label)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setRequired($required)
+      ->setSetting('target_type', 'paragraph')
+      ->setSetting('handler', 'default:paragraph')
+      ->setSetting('handler_settings', ['target_bundles' => $bundles])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_paragraphs',
+        'weight' => 12,
+        'settings' => [
+          'title' => 'Paragraph',
+          'title_plural' => 'Paragraphs',
+          'edit_mode' => 'open',
+          'add_mode' => 'dropdown',
+          'form_display_mode' => 'default',
+          'default_paragraph_type' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+  }
+
   public static function createFieldNodeReference($label, $targetType, $bundle, $required = FALSE) {
     return BaseFieldDefinition::create('entity_reference')
       ->setLabel($label)
