@@ -181,17 +181,18 @@ class EntityBuilderHelper {
 
   }
 
-  public static function createFieldParagraph($label, $bundles, $required) {
+  public static function createFieldParagraph($label, $bundles, $required, $translatable) {
     return BaseFieldDefinition::create('entity_reference_revisions')
       ->setLabel($label)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setRequired($required)
+      ->setTranslatable($translatable)
       ->setSetting('target_type', 'paragraph')
       ->setSetting('handler', 'default:paragraph')
       ->setSetting('handler_settings', ['target_bundles' => $bundles])
+      ->setSetting('handler_settings', ['negate' => 0])
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_paragraphs',
-        'weight' => 12,
         'settings' => [
           'title' => 'Paragraph',
           'title_plural' => 'Paragraphs',
@@ -200,6 +201,10 @@ class EntityBuilderHelper {
           'form_display_mode' => 'default',
           'default_paragraph_type' => '',
         ],
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
