@@ -250,4 +250,19 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
   }
+
+  public static function createFieldLink($label, $required, $translatable, $linkType, $titleEnabled) {
+    return BaseFieldDefinition::create('link')
+      ->setLabel($label)
+      ->setRequired($required)
+      ->setTranslatable($translatable)
+      ->setSettings([
+        'link_type' => $linkType,
+        'title' => $titleEnabled
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'link_default',
+      ])
+      ->setDisplayConfigurable('form', TRUE);
+  }
 }
