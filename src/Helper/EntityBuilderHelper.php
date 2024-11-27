@@ -5,6 +5,9 @@ namespace Drupal\mrmilu_entity_builder\Helper;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
+/**
+ * Helper class to create fields in custom entities.
+ */
 class EntityBuilderHelper {
 
   public static function createFieldTextfield($label, $required, $translatable) {
@@ -110,7 +113,22 @@ class EntityBuilderHelper {
     return $field;
   }
 
-  public static function createFieldImage($label, $required) {
+  /**
+   * Create field image.
+   *
+   * @param string $label
+   *   The label for image field.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param bool $focalPoint
+   *   Check if form add support for focal point.
+   * @param bool $webpSupport
+   *   Check if webp extension is allowed.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldImage(string $label, bool $required, bool $focalPoint = FALSE, bool $webpSupport = FALSE): BaseFieldDefinition {
     return BaseFieldDefinition::create('image')
       ->setLabel($label)
       ->setRequired($required)
@@ -119,17 +137,17 @@ class EntityBuilderHelper {
         'alt_field_required' => FALSE,
         'title_field' => FALSE,
         'title_field_required' => FALSE,
-        'file_extensions' => 'png jpg jpeg',
+        'file_extensions' => $webpSupport ? 'png jpg jpeg webp' : 'png jpg jpeg',
       ])
-      ->setDisplayOptions('view', array(
+      ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'default',
         'weight' => 0,
-      ))
-      ->setDisplayOptions('form', array(
+      ])
+      ->setDisplayOptions('form', [
         'label' => 'hidden',
-        'type' => 'image_image',
-      ))
+        'type' => $focalPoint ? 'image_focal_point' : 'image_image',
+      ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
   }
