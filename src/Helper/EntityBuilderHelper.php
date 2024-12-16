@@ -10,7 +10,20 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
  */
 class EntityBuilderHelper {
 
-  public static function createFieldTextfield($label, $required, $translatable) {
+  /**
+   * Create field textfield.
+   *
+   * @param string $label
+   *   The label for textfield field.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param bool $translatable
+   *   Check if field is translatable or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldTextfield(string $label, bool $required, bool $translatable): BaseFieldDefinition {
     return BaseFieldDefinition::create('string')
       ->setLabel($label)
       ->setRequired($required)
@@ -30,7 +43,22 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldTextarea($label, $description, $required, $translatable) {
+  /**
+   * Create field textarea.
+   *
+   * @param string $label
+   *   The label for textarea field.
+   * @param string|null $description
+   *   The description for textarea field.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param bool $translatable
+   *   Check if field is translatable or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldTextarea(string $label, ?string $description, bool $required, bool $translatable): BaseFieldDefinition {
     return BaseFieldDefinition::create('string_long')
       ->setLabel($label)
       ->setDescription($description)
@@ -52,7 +80,22 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldFormattedTextarea($label, $description, $required, $translatable) {
+  /**
+   * Create field formatted textarea.
+   *
+   * @param string $label
+   *   The label for formatted textarea field.
+   * @param string|null $description
+   *   The description for textarea field.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param bool $translatable
+   *   Check if field is translatable or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldFormattedTextarea(string $label, ?string $description, bool $required, bool $translatable): BaseFieldDefinition {
     return BaseFieldDefinition::create('text_long')
       ->setLabel($label)
       ->setDescription($description)
@@ -74,7 +117,18 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldInteger($label, $required) {
+  /**
+   * Create field integer.
+   *
+   * @param string $label
+   *   The label for integer field.
+   * @param bool $required
+   *   Check if field is required or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldInteger(string $label, bool $required): BaseFieldDefinition {
     return BaseFieldDefinition::create('integer')
       ->setLabel($label)
       ->setRequired($required)
@@ -93,12 +147,28 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldList($label, $required, $options, $multiple = FALSE) {
+  /**
+   * Create field text list with options.
+   *
+   * @param string $label
+   *   The label for list field.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param array $options
+   *   Field options.
+   * @param bool $multiple
+   *   Check if field is multiple or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldList(string $label, bool $required, array $options, bool $multiple = FALSE): BaseFieldDefinition {
     $field = BaseFieldDefinition::create('list_string')
       ->setLabel($label)
       ->setRequired($required)
       ->setSettings([
-        'allowed_values' => $options])
+        'allowed_values' => $options,
+      ])
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',
@@ -109,7 +179,9 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    if ($multiple) $field->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+    if ($multiple) {
+      $field->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+    }
     return $field;
   }
 
@@ -152,7 +224,18 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldEmail($label, $required) {
+  /**
+   * Create field email.
+   *
+   * @param string $label
+   *   The label for email field.
+   * @param bool $required
+   *   Check if field is required or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldEmail(string $label, bool $required): BaseFieldDefinition {
     return BaseFieldDefinition::create('email')
       ->setLabel($label)
       ->setRequired($required)
@@ -171,17 +254,39 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldBoolean($label) {
+  /**
+   * Create field boolean.
+   *
+   * @param string $label
+   *   The label for boolean field.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldBoolean(string $label): BaseFieldDefinition {
     return BaseFieldDefinition::create('boolean')
       ->setLabel($label)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
-        'checked' => 'checked'
+        'checked' => 'checked',
       ])
       ->setDisplayConfigurable('form', TRUE);
   }
 
-  public static function createFieldEntityReference($label, $targetType, $required = FALSE) {
+  /**
+   * Create field entity reference.
+   *
+   * @param string $label
+   *   The label for entity reference field.
+   * @param string $targetType
+   *   Referenced entity type.
+   * @param bool $required
+   *   Check if field is required or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldEntityReference(string $label, string $targetType, bool $required = FALSE): BaseFieldDefinition {
     return BaseFieldDefinition::create('entity_reference')
       ->setLabel($label)
       ->setRequired($required)
@@ -196,10 +301,24 @@ class EntityBuilderHelper {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-
   }
 
-  public static function createFieldParagraph($label, $bundles, $required, $translatable) {
+  /**
+   * Create field paragraph.
+   *
+   * @param string $label
+   *   The label for paragraph field.
+   * @param array $bundles
+   *   Possible bundles to be referenced in paragraph entity type.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param bool $translatable
+   *   Check if field is translatable or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldParagraph(string $label, array $bundles, bool $required, bool $translatable): BaseFieldDefinition {
     return BaseFieldDefinition::create('entity_reference_revisions')
       ->setLabel($label)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
@@ -228,7 +347,22 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('form', TRUE);
   }
 
-  public static function createFieldNodeReference($label, $targetType, $bundle, $required = FALSE) {
+  /**
+   * Craete field node reference.
+   *
+   * @param string $label
+   *   The label for node reference field.
+   * @param string $targetType
+   *   Referenced entity type.
+   * @param string $bundle
+   *   Possible bundle to be referenced in node entity type.
+   * @param bool $required
+   *   Check if field is required or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldNodeReference(string $label, string $targetType, string $bundle, bool $required = FALSE): BaseFieldDefinition {
     return BaseFieldDefinition::create('entity_reference')
       ->setLabel($label)
       ->setRequired($required)
@@ -248,39 +382,99 @@ class EntityBuilderHelper {
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldDatetime($label, $required) {
+  /**
+   * Create field datetime.
+   *
+   * @param string $label
+   *   The label for datetime field.
+   * @param bool $required
+   *   Check if field is required or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldDatetime(string $label, bool $required): BaseFieldDefinition {
     return BaseFieldDefinition::create('datetime')
       ->setLabel($label)
       ->setRequired($required)
       ->setSettings([
-        'datetime_type' => 'date'
+        'datetime_type' => 'date',
       ])
-      ->setDisplayOptions('view', array(
+      ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'datetime_default',
         'settings' => [
           'format_type' => 'medium',
         ],
-      ))
-      ->setDisplayOptions('form', array(
+      ])
+      ->setDisplayOptions('form', [
         'type' => 'datetime_default',
-      ))
+      ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
   }
 
-  public static function createFieldLink($label, $required, $translatable, $linkType, $titleEnabled) {
+  /**
+   * Create field link.
+   *
+   * @param string $label
+   *   The label for link field.
+   * @param bool $required
+   *   Check if field is required or not.
+   * @param bool $translatable
+   *   Check if field is translatable or not.
+   * @param int $linkType
+   *   External, internal or both.
+   * @param bool $titleEnabled
+   *   Check if title is enabled or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldLink(string $label, bool $required, bool $translatable, int $linkType, bool $titleEnabled): BaseFieldDefinition {
     return BaseFieldDefinition::create('link')
       ->setLabel($label)
       ->setRequired($required)
       ->setTranslatable($translatable)
       ->setSettings([
         'link_type' => $linkType,
-        'title' => $titleEnabled
+        'title' => $titleEnabled,
       ])
       ->setDisplayOptions('form', [
         'type' => 'link_default',
       ])
       ->setDisplayConfigurable('form', TRUE);
   }
+
+  /**
+   * Create field media image.
+   *
+   * @param string $label
+   *   The label for image field.
+   * @param bool $required
+   *   Check if field is required or not.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The entity field.
+   */
+  public static function createFieldMediaImage(string $label, bool $required): BaseFieldDefinition {
+    return BaseFieldDefinition::create('entity_reference')
+      ->setLabel($label)
+      ->setRequired($required)
+      ->setSetting('target_type', 'media')
+      ->setSetting('handler', 'default')
+      ->setSetting('handler_settings',
+        ['target_bundles' => ['image' => 'image']]
+      )
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'media_library_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+  }
+
 }

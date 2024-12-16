@@ -3,4 +3,9 @@ type: module
 description: Helper to simplify fields creation in custom entity
 package: Mr. Milú
 core_version_requirement: ^9 || ^10
-version: 2.1.0
+version: 2.2.0
+
+dependencies:
+  - drupal:image
+  - drupal:media
+  - drupal:media_library
